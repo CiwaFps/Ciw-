@@ -9,7 +9,7 @@ _G.ShowPlayer = false
 _G.ShowExit = false
 _G.ShowWindow = false
 
-local MasterBtn = Instance.new("TextButton", ScrollTab4)
+local MasterBtn = Instance.new("TextButton", _G.ScrollTab4)
 MasterBtn.Size = UDim2.new(0.9, 0, 0, 35)
 MasterBtn.BackgroundColor3 = Color3.fromRGB(150, 0, 0)
 MasterBtn.Text = "ESP: OFF"
@@ -25,7 +25,7 @@ MasterBtn.MouseButton1Click:Connect(function()
 end)
 
 local function CreateRow(display, var, defaultColor, order)
-    local Row = Instance.new("Frame", ScrollTab4)
+    local Row = Instance.new("Frame", _G.ScrollTab4)
     Row.Size = UDim2.new(0.9, 0, 0, 30)
     Row.BackgroundTransparency = 1
     Row.LayoutOrder = order
