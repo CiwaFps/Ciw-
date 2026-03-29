@@ -1,20 +1,27 @@
-_G.CreateScroll = function(name, parent, visible)
-    local ScrollMenu = Instance.new("ScrollingFrame", parent)
+local M = {}
+
+function M.CreateScroll(name, parent, visible)
+    local ScrollMenu = Instance.new("ScrollingFrame")
     ScrollMenu.Name = name
     ScrollMenu.Size = UDim2.new(1, 0, 1, 0)
     ScrollMenu.BackgroundTransparency = 1
-    ScrollMenu.CanvasSize = UDim2.new(0, 0, 0, 406)
-    ScrollMenu.ScrollBarThickness = 1
+    ScrollMenu.CanvasSize = UDim2.new(0, 0, 0, 0)
+    ScrollMenu.AutomaticCanvasSize = Enum.AutomaticCanvasSize.Y
+    ScrollMenu.ScrollBarThickness = 0
+    ScrollMenu.VerticalScrollBarInset = Enum.ScrollBarInset.None
     ScrollMenu.Visible = visible
+    ScrollMenu.Parent = parent
     local ScrollLayout = Instance.new("UIListLayout", ScrollMenu)
-ScrollLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-ScrollLayout.Padding = UDim.new(0, 5)
-ScrollLayout.SortOrder = Enum.SortOrder.LayoutOrder
-local ScrollLayoutP = Instance.new("UIPadding", ScrollMenu)
-ScrollLayoutP.PaddingTop = UDim.new(0, 5) 
+    ScrollLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+    ScrollLayout.Padding = UDim.new(0, 5)
+    ScrollLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    local ScrollLayoutP = Instance.new("UIPadding", ScrollMenu)
+    ScrollLayoutP.PaddingTop = UDim.new(0, 5)
+    ScrollLayoutP.PaddingBottom = UDim.new(0, 5)    
     return ScrollMenu
 end
-_G.CreateButtonTab = function(name, parent, order, callback)
+_G.currentTab = nil
+function M.CreateButtonTab(name, parent, order, callback)
     local Btn = Instance.new("TextButton")
     Btn.Name = name
     Btn.Parent = parent
@@ -28,9 +35,9 @@ _G.CreateButtonTab = function(name, parent, order, callback)
     Btn.TextSize = 12
     Btn.LayoutOrder = order
    Btn.Activated:Connect(function()
-        if currentTab then
-            currentTab.BackgroundTransparency = 1
-            currentTab.TextColor3 = Color3.fromRGB(150, 150, 150)
+        if _G.currentTab then
+            _G.currentTab.BackgroundTransparency = 1
+            _G.currentTab.TextColor3 = Color3.fromRGB(150, 150, 150)
         end
         currentTab = Btn
         Btn.BackgroundTransparency = 0.8
@@ -40,7 +47,7 @@ _G.CreateButtonTab = function(name, parent, order, callback)
     Instance.new("UICorner", Btn).CornerRadius = UDim.new(0, 4)
     return Btn
 end
-_G.CreateCollapse = function(title, parent, layoutOrder)
+function M.CreateCollapse(title, parent, layoutOrder)
     local Main = Instance.new("Frame")
     Main.Name = title
     Main.Size = UDim2.new(1, 0, 0, 35) 
@@ -76,25 +83,31 @@ _G.CreateCollapse = function(title, parent, layoutOrder)
     local ListLayout = Instance.new("UIListLayout", ContentList)
     ListLayout.Padding = UDim.new(0, 5)
     ListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+
     local isOpen = false
-    Header.MouseButton1Click:Connect(function()
-        isOpen = not isOpen      
+    local function updateSize()
         local contentHeight = ListLayout.AbsoluteContentSize.Y
-        local targetContentSize = isOpen and UDim2.new(1, 0, 0, contentHeight + 10) or UDim2.new(1, 0, 0, 0)
         local targetMainSize = isOpen and UDim2.new(1, 0, 0, contentHeight + 45) or UDim2.new(1, 0, 0, 35)
-        local targetRotation = isOpen and 180 or 0        
-        local info = TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)        
-        if isOpen then ContentList.Visible = true end
-        game:GetService("TweenService"):Create(ContentList, info, {Size = targetContentSize}):Play()
+        local targetContentSize = isOpen and UDim2.new(1, 0, 0, contentHeight + 5) or UDim2.new(1, 0, 0, 0)    
+        local info = TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
         game:GetService("TweenService"):Create(Main, info, {Size = targetMainSize}):Play()
-        game:GetService("TweenService"):Create(Arrow, info, {Rotation = targetRotation}):Play()
+        game:GetService("TweenService"):Create(ContentList, info, {Size = targetContentSize}):Play()
+    end
+    ListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+        if isOpen then updateSize() end
+    end)
+    Header.MouseButton1Click:Connect(function()
+        isOpen = not isOpen
+        if isOpen then ContentList.Visible = true end     
+        updateSize()
+        game:GetService("TweenService"):Create(Arrow, TweenInfo.new(0.3), {Rotation = isOpen and 180 or 0}):Play()    
         task.delay(0.3, function()
             if not isOpen then ContentList.Visible = false end
         end)
     end)
     return ContentList
 end
-_G.CreateInput = function(name, parent, order)
+function M.CreateInput(name, parent, order)
     local InputRow = Instance.new("Frame", parent)
     InputRow.Size = UDim2.new(0.95, 0, 0, 30)
     InputRow.BackgroundTransparency = 1
@@ -125,7 +138,7 @@ _G.CreateInput = function(name, parent, order)
     Instance.new("UICorner", InputBox).CornerRadius = UDim.new(0, 4)
     return InputBox
 end
-_G.CreateToggle = function(name, parent, order, callback)
+function M.CreateToggle(name, parent, order, callback)
     local Row = Instance.new("Frame", parent)
     Row.Size = UDim2.new(0.95, 0, 0, 30)
     Row.BackgroundTransparency = 1
@@ -154,3 +167,52 @@ _G.CreateToggle = function(name, parent, order, callback)
         callback(enabled)
     end)
 end
+_G.Toggles = {}
+function M.CreateButtonOnOff(name, parent, order, callback)
+    local Btn = Instance.new("TextButton")
+    Btn.Name = name 
+    Btn.Size = UDim2.new(1, -10, 0, 35)
+    Btn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    Btn.Text = name .. " : OFF"
+    Btn.TextColor3 = Color3.fromRGB(200, 200, 200)
+    Btn.Font = Enum.Font.GothamBold
+    Btn.TextSize = 12
+    Btn.LayoutOrder = order
+    Btn.Parent = parent
+    local BCorner = Instance.new("UICorner")
+    BCorner.CornerRadius = UDim.new(0, 6)
+    BCorner.Parent = Btn
+    _G.Toggles[name] = false 
+    Btn.MouseButton1Click:Connect(function()
+        _G.Toggles[name] = not _G.Toggles[name]
+        local state = _G.Toggles[name]
+        Btn.Text = name .. (state and " : ON" or " : OFF")
+        Btn.BackgroundColor3 = state and Color3.fromRGB(255, 120, 0) or Color3.fromRGB(50, 50, 50)
+        Btn.TextColor3 = state and Color3.fromRGB(255, 255, 255) or Color3.fromRGB(200, 200, 200) 
+        callback(state)
+    end)
+end
+function M.CreateButton(name, parent, order, callback)
+    local Btn = Instance.new("TextButton")
+    Btn.Name = name .. "_ClickBtn"
+    Btn.Parent = parent
+    Btn.Size = UDim2.new(1, -10, 0, 35)
+    Btn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+    Btn.BackgroundTransparency = 0.5
+    Btn.Text = name
+    Btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Btn.Font = Enum.Font.GothamBold
+    Btn.TextSize = 12
+    Btn.LayoutOrder = order
+    Btn.MouseButton1Click:Connect(function()
+        Btn.BackgroundColor3 = Color3.fromRGB(255, 100, 0)
+        task.wait(0.1)
+        Btn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)     
+        callback()
+    end)
+    Btn.MouseEnter:Connect(function() Btn.BackgroundTransparency = 0.2 end)
+    Btn.MouseLeave:Connect(function() Btn.BackgroundTransparency = 0.5 end)
+    Instance.new("UICorner", Btn).CornerRadius = UDim.new(0, 5)
+    return Btn
+end
+return M
