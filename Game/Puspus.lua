@@ -57,9 +57,7 @@ function M.CreateCollapse(title, parent, layoutOrder)
     Main.BackgroundTransparency = 0.2
     Main.BorderSizePixel = 0
     Main.ClipsDescendants = true
-    Main.ZIndex = 1 -- Kasta standar
     Instance.new("UICorner", Main).CornerRadius = UDim.new(0, 5) 
-
     local Header = Instance.new("TextButton", Main)
     Header.Name = "Header"
     Header.Size = UDim2.new(1, 0, 0, 35)
@@ -69,38 +67,24 @@ function M.CreateCollapse(title, parent, layoutOrder)
     Header.TextXAlignment = Enum.TextXAlignment.Left
     Header.Font = Enum.Font.Gotham
     Header.TextSize = 13
-    Header.ZIndex = 2
-
-    -- INI SOLUSINYA: Arrow dimasukkan ke dalam Frame (Holder)
-    local ArrowHolder = Instance.new("Frame", Header)
-    ArrowHolder.Name = "ArrowHolder"
-    ArrowHolder.Size = UDim2.new(0, 30, 1, 0)
-    ArrowHolder.Position = UDim2.new(1, -30, 0, 0)
-    ArrowHolder.BackgroundTransparency = 1
-    ArrowHolder.ClipsDescendants = true -- Memotong rotasi yang bocor
-    ArrowHolder.ZIndex = 3
-
-    local Arrow = Instance.new("TextLabel", ArrowHolder)
+    local Arrow = Instance.new("TextLabel", Header)
     Arrow.Name = "Arrow"
-    Arrow.Size = UDim2.new(1, 0, 1, 0)
+    Arrow.Size = UDim2.new(0, 30, 1, 0)
+    Arrow.Position = UDim2.new(1, -30, 0, 0)
     Arrow.BackgroundTransparency = 1
     Arrow.Text = "▼"
+    Arrow.ZIndex = 1
     Arrow.TextColor3 = Color3.new(1, 1, 1)
     Arrow.TextSize = 8
-    Arrow.ZIndex = 4
-
     local ContentList = Instance.new("Frame", Main)
     ContentList.Name = "ContentList"
     ContentList.Position = UDim2.new(0, 0, 0, 35)
     ContentList.Size = UDim2.new(1, 0, 0, 0)
     ContentList.BackgroundTransparency = 1
     ContentList.Visible = false
-    ContentList.ZIndex = 1
-
     local ListLayout = Instance.new("UIListLayout", ContentList)
     ListLayout.Padding = UDim.new(0, 5)
     ListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-
     local isOpen = false
     local function updateSize()
         local contentHeight = ListLayout.AbsoluteContentSize.Y
@@ -110,22 +94,18 @@ function M.CreateCollapse(title, parent, layoutOrder)
         game:GetService("TweenService"):Create(Main, info, {Size = targetMainSize}):Play()
         game:GetService("TweenService"):Create(ContentList, info, {Size = targetContentSize}):Play()
     end
-
     ListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
         if isOpen then updateSize() end
     end)
-
     Header.MouseButton1Click:Connect(function()
-        isOpen = not isOpen
-        if isOpen then ContentList.Visible = true end     
-        updateSize()
-        -- Animasi rotasi sekarang aman di dalam Holder
-        game:GetService("TweenService"):Create(Arrow, TweenInfo.new(0.3), {Rotation = isOpen and 180 or 0}):Play()    
-        task.delay(0.3, function()
-            if not isOpen then ContentList.Visible = false end
-        end)
+    isOpen = not isOpen
+    Arrow.Text = isOpen and "▲" or "▼"  
+    if isOpen then ContentList.Visible = true end     
+    updateSize()  
+    task.delay(0.3, function()
+        if not isOpen then ContentList.Visible = false end
     end)
-
+end)
     return ContentList
 end
 function M.CreateInput(name, parent, order)
