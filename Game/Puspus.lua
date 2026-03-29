@@ -18,7 +18,6 @@ function M.CreateScroll(name, parent, chight, visible)
     ScrollLayoutP.PaddingBottom = UDim.new(0, 5)    
     return ScrollMenu
 end
-_G.currentTab = nil
 function M.CreateButtonTab(name, parent, order, callback)
     local Btn = Instance.new("TextButton")
     Btn.Name = name
