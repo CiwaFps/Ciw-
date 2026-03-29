@@ -10,6 +10,7 @@ function M.CreateScroll(name, parent, visible)
     ScrollMenu.ScrollBarThickness = 0
     ScrollMenu.VerticalScrollBarInset = Enum.ScrollBarInset.None
     ScrollMenu.Visible = visible
+    ScrollMenu.ClipsDescendants = true
     local ScrollLayout = Instance.new("UIListLayout", ScrollMenu)
     ScrollLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
     ScrollLayout.Padding = UDim.new(0, 5)
