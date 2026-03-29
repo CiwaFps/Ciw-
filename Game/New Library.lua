@@ -1,16 +1,14 @@
 local M = {}
 
 function M.CreateScroll(name, parent, visible)
-    local ScrollMenu = Instance.new("ScrollingFrame")
+    local ScrollMenu = Instance.new("ScrollingFrame", parent)
     ScrollMenu.Name = name
     ScrollMenu.Size = UDim2.new(1, 0, 1, 0)
     ScrollMenu.BackgroundTransparency = 1
-    ScrollMenu.CanvasSize = UDim2.new(0, 0, 0, 0)
-    ScrollMenu.AutomaticCanvasSize = Enum.AutomaticCanvasSize.Y
+    ScrollMenu.CanvasSize = UDim2.new(0, 0, 0, 250)
     ScrollMenu.ScrollBarThickness = 0
     ScrollMenu.VerticalScrollBarInset = Enum.ScrollBarInset.None
     ScrollMenu.Visible = visible
-    ScrollMenu.Parent = parent
     local ScrollLayout = Instance.new("UIListLayout", ScrollMenu)
     ScrollLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
     ScrollLayout.Padding = UDim.new(0, 5)
