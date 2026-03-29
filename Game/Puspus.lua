@@ -73,6 +73,7 @@ function M.CreateCollapse(title, parent, layoutOrder)
     Arrow.Position = UDim2.new(1, -30, 0, 0)
     Arrow.BackgroundTransparency = 1
     Arrow.Text = "▼"
+    Arrow.ZIndex = 1
     Arrow.TextColor3 = Color3.new(1, 1, 1)
     Arrow.TextSize = 8
     local ContentList = Instance.new("Frame", Main)
