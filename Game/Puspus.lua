@@ -27,7 +27,7 @@ function M.CreateButtonTab(name, parent, order, callback)
     Btn.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
     Btn.BackgroundTransparency = 1
     Btn.Text = "      " .. name
-    Btn.TextColor3 = Color3.fromRGB(200, 200, 200)
+    Btn.TextColor3 = Color3.fromRGB(224, 224, 224)
     Btn.TextXAlignment = Enum.TextXAlignment.Left
     Btn.Font = Enum.Font.Gotham
     Btn.TextSize = 13
@@ -36,7 +36,7 @@ function M.CreateButtonTab(name, parent, order, callback)
         for _, v in pairs(parent:GetChildren()) do
             if v:IsA("TextButton") then
                 v.BackgroundTransparency = 1
-                v.TextColor3 = Color3.fromRGB(255, 255, 255)
+                v.TextColor3 = Color3.fromRGB(224, 224, 224)
             end
         end
         Btn.BackgroundTransparency = 0.4
@@ -52,6 +52,7 @@ function M.CreateCollapse(title, parent, layoutOrder)
     Main.Size = UDim2.new(1, 0, 0, 35) 
     Main.Parent = parent
     Main.LayoutOrder = layoutOrder
+    Main.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
     Main.BackgroundTransparency = 0.4
     Main.BorderSizePixel = 0
     Main.ClipsDescendants = true
