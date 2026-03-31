@@ -120,6 +120,7 @@ local scriptURL  = games[universeId]
 
 if scriptURL then
     Notify("Game Terdaftar", Color3.fromRGB(153, 153, 255))
+            task.wait(1)
     local ok, err = pcall(function()
         loadstring(game:HttpGet(scriptURL))()
     end)
@@ -129,6 +130,7 @@ if scriptURL then
     end
 else
     Notify("Game Tidak Terdaftar", Color3.fromRGB(204, 255, 204))
+            task.wait(1)
     local ok, err = pcall(function()
         loadstring(game:HttpGet(UNIVERSAL_SCRIPT))()
     end)
