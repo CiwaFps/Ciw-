@@ -1,4 +1,5 @@
 local M = {}
+local SGui, FGui, CategoryTab, ContentTab
 
 function M.CreateWindow()
 local CoreGui = game:GetService("CoreGui")
@@ -6,11 +7,9 @@ local oldGui = CoreGui:FindFirstChild(WoGuiName)
 if oldGui then
     oldGui:Destroy()
 end
-local SGui = Instance.new("ScreenGui", CoreGui)
-local HiddenMenu = Instance.new("ScreenGui", CoreGui)
+SGui = Instance.new("ScreenGui", CoreGui)
 SGui.Name = WoGuiName
-SGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-local FGui = Instance.new("CanvasGroup", SGui)
+SGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling FGui = Instance.new("CanvasGroup", SGui)
 FGui.Size = UDim2.new(0, 400, 0, 254)
 FGui.GroupTransparency = 0.1
 FGui.ClipsDescendants = true
@@ -74,7 +73,7 @@ OpenBtn.MouseButton1Click:Connect(function()
     FGui.Visible = true
     OpenBtn.Visible = false
 end)
-local CategoryTab = Instance.new("Frame", FGui)
+CategoryTab = Instance.new("Frame", FGui)
 CategoryTab.BackgroundTransparency = 1
 CategoryTab.BorderSizePixel = 0
 CategoryTab.Size = UDim2.new(0, 110, 1, -50)
@@ -85,7 +84,7 @@ local ListLayout = Instance.new("UIListLayout", CategoryTab)
     ListLayout.Padding = UDim.new(0, 5)
     ListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
     ListLayout.SortOrder = Enum.SortOrder.LayoutOrder  
-local ContentTab = Instance.new("Frame", FGui)
+ContentTab = Instance.new("Frame", FGui)
 ContentTab.BackgroundTransparency = 1
 ContentTab.BorderSizePixel = 0
 ContentTab.ClipsDescendants = true
