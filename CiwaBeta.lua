@@ -92,7 +92,20 @@ end)
     end)
 end
 
-Notify("Memeriksa ID: " .. tostring(universeId), Color3.fromRGB(204, 255, 255))
+local MarketplaceService = game:GetService("MarketplaceService")
+local function GetRealGameName()
+    local success, info = pcall(function()
+        return MarketplaceService:GetProductInfo(game.PlaceId)
+    end)
+    if success and info then
+        return info.Name
+    else
+        return "Game Tidak Diketahui"
+    end
+end
+
+local NameGame = GetRealGameName()
+Notify("Memeriksa: " .. NameGame, Color3.fromRGB(204, 255, 255))
 task.wait(2)
 
 task.spawn(function()
