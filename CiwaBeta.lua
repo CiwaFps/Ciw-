@@ -92,7 +92,7 @@ local games = {
     [6739698191] = "https://raw.githubusercontent.com/CiwaFps/Ciw-/refs/heads/main/Game/Ciwa%20x%20VD.lua",
 }
 
-local UNIVERSAL_SCRIPT = "https://raw.githubusercontent.com/Username/Repo/main/ScriptBebas.lua"
+local UNIVERSAL_SCRIPT = ""
 
 local universeId = game.GameId
 local placeId    = game.PlaceId
