@@ -1,4 +1,6 @@
 local M = {}
+
+function M.CreateWindow()
 local CoreGui = game:GetService("CoreGui")
 local oldGui = CoreGui:FindFirstChild(WoGuiName)
 if oldGui then
@@ -91,7 +93,7 @@ ContentTab.Size = UDim2.new(1, -130, 1, -50)
 ContentTab.Position = UDim2.new(0, 120, 0, 40)
 local CoTabCorner = Instance.new("UICorner", ContentTab)
 CoTabCorner.CornerRadius = UDim.new(0, 5)
-
+end
 
 function M.CreateScroll(name, visible)
     local ScrollMenu = Instance.new("ScrollingFrame", ContentTab)
