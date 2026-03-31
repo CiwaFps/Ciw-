@@ -92,7 +92,8 @@ end)
     end)
 end
 
-
+Notify("Memeriksa ID: " .. tostring(universeId), Color3.fromRGB(204, 255, 255))
+task.wait(2)
 
 local games = {
     [6739698191] = "https://raw.githubusercontent.com/CiwaFps/Ciw-/refs/heads/main/Game/Ciwa%20x%20VD.lua",
@@ -102,10 +103,6 @@ local UNIVERSAL_SCRIPT = "https://raw.githubusercontent.com/Username/Repo/main/S
 
 local universeId = game.GameId
 local scriptURL  = games[universeId]
-
-
-Notify("Memeriksa ID: " .. tostring(universeId), Color3.fromRGB(204, 255, 255))
-task.wait(2)
 
 if scriptURL then
     Notify("Game Terdaftar", Color3.fromRGB(153, 153, 255))
