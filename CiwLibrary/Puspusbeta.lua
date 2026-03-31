@@ -1,7 +1,8 @@
 local M = {}
 local SGui, FGui, CategoryTab, ContentTab
+local WoGuiName = "CiwaHub"
 
-function M.CreateWindows()
+function M.CreateWindow()
 local CoreGui = game:GetService("CoreGui")
 local oldGui = CoreGui:FindFirstChild(WoGuiName)
 if oldGui then
@@ -131,7 +132,7 @@ function M.CreateButtonTab(name, order, callback)
     Btn.TextSize = 13
     Btn.LayoutOrder = order
     Btn.Activated:Connect(function()
-        for _, v in pairs(ContentTab:GetChildren()) do
+        for _, v in pairs(CategoryTab:GetChildren()) do
             if v:IsA("TextButton") then
                 v.BackgroundTransparency = 1
                 v.TextColor3 = Color3.fromRGB(224, 224, 224)
