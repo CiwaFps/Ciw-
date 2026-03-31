@@ -128,12 +128,12 @@ function M.CreateButtonTab(name, order, callback)
     Btn.TextSize = 13
     Btn.LayoutOrder = order
     Btn.Activated:Connect(function()
-        for _, v in pairs(parent:GetChildren()) do
+        for _, v in pairs(CategoryTab:GetChildren()) do
             if v:IsA("TextButton") then
                 v.BackgroundTransparency = 1
                 v.TextColor3 = Color3.fromRGB(224, 224, 224)
             end
-        end
+                end
         Btn.BackgroundTransparency = 0
         Btn.TextColor3 = Color3.fromRGB(205, 153, 255)
         callback()
