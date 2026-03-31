@@ -92,9 +92,10 @@ end)
     end)
 end
 
-Notify("Memeriksa ID: " .. tostring(game.GameId), Color3.fromRGB(204, 255, 255))
+Notify("Memeriksa ID: " .. tostring(universeId), Color3.fromRGB(204, 255, 255))
 task.wait(2)
 
+task.spawn(function()
 local games = {
     [6739698191] = "https://raw.githubusercontent.com/CiwaFps/Ciw-/refs/heads/main/Game/Ciwa%20x%20VD.lua",
 }
@@ -126,3 +127,4 @@ end
 
 task.wait(5)
 _G.CiwaLoading = false
+end)
