@@ -1,3 +1,9 @@
+if _G.CiwaLoading then 
+    return
+end
+
+_G.CiwaLoading = true
+
 local VERSION = "1.0"
 local HUB_NAME = "Ciwa Notifikasi"
 local TweenService = game:GetService("TweenService")
@@ -92,10 +98,9 @@ local games = {
     [6739698191] = "https://raw.githubusercontent.com/CiwaFps/Ciw-/refs/heads/main/Game/Ciwa%20x%20VD.lua",
 }
 
-local UNIVERSAL_SCRIPT = ""
+local UNIVERSAL_SCRIPT = "https://raw.githubusercontent.com/Username/Repo/main/ScriptBebas.lua"
 
 local universeId = game.GameId
-local placeId    = game.PlaceId
 local scriptURL  = games[universeId]
 
 
@@ -121,3 +126,6 @@ else
         warn(string.format("[%s] Gagal load script bebas: %s", HUB_NAME, tostring(err)))
     end
 end
+
+task.wait(5)
+_G.CiwaLoading = false
