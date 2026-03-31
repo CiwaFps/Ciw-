@@ -1,7 +1,7 @@
 local M = {}
 local SGui, FGui, CategoryTab, ContentTab
-local WoGuiName = "CiwaHub"
-function M.CreateWindow()
+
+function M.CreateWindows()
 local CoreGui = game:GetService("CoreGui")
 local oldGui = CoreGui:FindFirstChild(WoGuiName)
 if oldGui then
@@ -9,7 +9,8 @@ if oldGui then
 end
 SGui = Instance.new("ScreenGui", CoreGui)
 SGui.Name = WoGuiName
-SGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling FGui = Instance.new("CanvasGroup", SGui)
+SGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+FGui = Instance.new("CanvasGroup", SGui)
 FGui.Size = UDim2.new(0, 400, 0, 254)
 FGui.GroupTransparency = 0.1
 FGui.ClipsDescendants = true
@@ -20,6 +21,7 @@ FGui.Visible = true
 FGui.Draggable = true
 local FGuiCorner = Instance.new("UICorner", FGui)
 FGuiCorner.CornerRadius = UDim.new(0, 5)
+
 local MiniBtn = Instance.new("TextButton", FGui)
 MiniBtn.Size = UDim2.new(0, 25, 0, 25)
 MiniBtn.Position = UDim2.new(1, -35, 0, 7)
@@ -94,7 +96,8 @@ local UICorner = Instance.new("UICorner", UItext)
 UICorner.CornerRadius = UDim.new(0, 5)
 end
 
-function M.CreateScroll(name, visiblend
+
+function M.CreateScroll(name, visible)
     local ScrollMenu = Instance.new("ScrollingFrame", ContentTab)
     ScrollMenu.Name = name
     ScrollMenu.Size = UDim2.new(1, 0, 1, 0)
@@ -128,12 +131,12 @@ function M.CreateButtonTab(name, order, callback)
     Btn.TextSize = 13
     Btn.LayoutOrder = order
     Btn.Activated:Connect(function()
-        for _, v in pairs(CategoryTab:GetChildren()) do
+        for _, v in pairs(parent:GetChildren()) do
             if v:IsA("TextButton") then
                 v.BackgroundTransparency = 1
                 v.TextColor3 = Color3.fromRGB(224, 224, 224)
             end
-                end
+        end
         Btn.BackgroundTransparency = 0
         Btn.TextColor3 = Color3.fromRGB(205, 153, 255)
         callback()
