@@ -1,11 +1,10 @@
 local VERSION = "1.0"
-local HUB_NAME = "Ciwa Hub"
+local HUB_NAME = "Ciwa Notifikasi"
 local TweenService = game:GetService("TweenService")
 local CoreGui = game:GetService("CoreGui")
 
 local MainGui = Instance.new("ScreenGui", CoreGui)
-MainGui.Name = "NotifSystemPremium"
-
+MainGui.Name = HUB_NAME
 local Holder = Instance.new("Frame", MainGui)
 Holder.Size = UDim2.new(0, 250, 1, -20)
 Holder.Position = UDim2.new(1, -10, 0, 10)
@@ -77,7 +76,13 @@ local function Notify(text, color)
             BackgroundTransparency = 1
         })
         slideOut:Play()
-        slideOut.Completed:Connect(function() f:Destroy() end)
+        slideOut.Completed:Connect(function()
+    f:Destroy()
+    if #Holder:GetChildren() <= 1 then
+        MainGui:Destroy()
+        warn(string.format("[%s] Sudah Di Hapus Ya Kontol: %s", HUB_NAME, tostring(err)))
+    end
+end)
     end)
 end
 
@@ -94,7 +99,7 @@ local placeId    = game.PlaceId
 local scriptURL  = games[universeId]
 
 
-Notify("Memeriksa ID: " .. tostring(placeId), Color3.fromRGB(204, 255, 255))
+Notify("Memeriksa ID: " .. tostring(universeId), Color3.fromRGB(204, 255, 255))
 task.wait(2)
 
 if scriptURL then
