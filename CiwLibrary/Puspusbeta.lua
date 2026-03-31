@@ -1,6 +1,6 @@
 local M = {}
 local SGui, FGui, CategoryTab, ContentTab
-
+local WoGuiName = "CiwaHub"
 function M.CreateWindow()
 local CoreGui = game:GetService("CoreGui")
 local oldGui = CoreGui:FindFirstChild(WoGuiName)
@@ -20,22 +20,6 @@ FGui.Visible = true
 FGui.Draggable = true
 local FGuiCorner = Instance.new("UICorner", FGui)
 FGuiCorner.CornerRadius = UDim.new(0, 5)
-
-function M.CreateTitle(name)
-local UItext = Instance.new("TextLabel", FGui)
-UItext.Size = UDim2.new(1, 0, 0, 40)
-UItext.TextColor3 = Color3.fromRGB(205, 153, 255)
-UItext.Text = "     Ciwa  さん      |          " .. name
-UItext.BackgroundTransparency = 1
-UItext.BorderSizePixel = 0
-UItext.TextSize = 13
-UItext.ZIndex = 18
-UItext.TextXAlignment = Enum.TextXAlignment.Left
-UItext.Font = Enum.Font.GothamBold
-local UICorner = Instance.new("UICorner", UItext)
-UICorner.CornerRadius = UDim.new(0, 5)
-end
-
 local MiniBtn = Instance.new("TextButton", FGui)
 MiniBtn.Size = UDim2.new(0, 25, 0, 25)
 MiniBtn.Position = UDim2.new(1, -35, 0, 7)
@@ -94,7 +78,23 @@ local CoTabCorner = Instance.new("UICorner", ContentTab)
 CoTabCorner.CornerRadius = UDim.new(0, 5)
 end
 
-function M.CreateScroll(name, visible)
+function M.CreateTitle(name)
+local UItext = Instance.new("TextLabel", FGui)
+UItext.Size = UDim2.new(1, 0, 0, 40)
+UItext.Position = UDim2.new(0, 0, 0, 0)
+UItext.TextColor3 = Color3.fromRGB(205, 153, 255)
+UItext.Text = "     Ciwa  さん      |          " .. name
+UItext.BackgroundTransparency = 1
+UItext.BorderSizePixel = 0
+UItext.TextSize = 13
+UItext.ZIndex = 18
+UItext.TextXAlignment = Enum.TextXAlignment.Left
+UItext.Font = Enum.Font.GothamBold
+local UICorner = Instance.new("UICorner", UItext)
+UICorner.CornerRadius = UDim.new(0, 5)
+end
+
+function M.CreateScroll(name, visiblend
     local ScrollMenu = Instance.new("ScrollingFrame", ContentTab)
     ScrollMenu.Name = name
     ScrollMenu.Size = UDim2.new(1, 0, 1, 0)
