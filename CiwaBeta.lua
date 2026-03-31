@@ -92,7 +92,7 @@ end)
     end)
 end
 
-Notify("Memeriksa ID: " .. tostring(universeId), Color3.fromRGB(204, 255, 255))
+Notify("Memeriksa ID: " .. tostring(game.GameId), Color3.fromRGB(204, 255, 255))
 task.wait(2)
 
 local games = {
