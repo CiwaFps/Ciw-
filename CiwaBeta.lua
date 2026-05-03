@@ -27,4 +27,3 @@ else
 end
 task.wait(5)
 _G.CiwaLoading = false
-end)
