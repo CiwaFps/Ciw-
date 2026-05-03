@@ -10,7 +10,6 @@ local games = {
 }
 local UNIVERSAL_SCRIPT = "https://raw.githubusercontent.com/CiwaFps/Ciw-/refs/heads/main/Game/Uwu.lua"
 
--- Gunakan PlaceId jika ID di atas adalah ID dari URL game
 local currentId = game.PlaceId
 local scriptURL = games[currentId] or UNIVERSAL_SCRIPT
 
@@ -22,6 +21,5 @@ if not ok then
     warn(string.format("[%s] Gagal load script: %s", HUB_NAME, tostring(err)))
 end
 
--- Tunggu sebentar sebelum mengizinkan eksekusi ulang
 task.wait(5)
 _G.CiwaLoading = false
