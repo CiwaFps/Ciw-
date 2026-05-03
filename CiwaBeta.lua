@@ -10,7 +10,7 @@ local games = {
 }
 local UNIVERSAL_SCRIPT = "https://raw.githubusercontent.com/CiwaFps/Ciw-/refs/heads/main/Game/Uwu.lua"
 
-local currentId = game.PlaceId
+local currentId = game.GameId
 local scriptURL = games[currentId] or UNIVERSAL_SCRIPT
 
 local ok, err = pcall(function()
